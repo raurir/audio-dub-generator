@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dub Generator</title>
+  <style>
+    :root {
+      --bg: #0e1012; --panel: #171a1d; --line: #2a2f34; --text: #d7dde3; --dim: #7d8791;
+      --accent: #fbbf24;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px 16px; background: var(--bg); color: var(--text); font: 14px/1.4 ui-monospace, Menlo, monospace; }
+    main { max-width: 960px; margin: 0 auto; display: grid; gap: 12px; }
+    header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    h1 { font-size: 16px; margin: 0 12px 0 0; letter-spacing: 0.1em; text-transform: uppercase; }
+    #status { color: var(--dim); }
+    button {
+      background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 6px;
+      padding: 6px 12px; font: inherit; cursor: pointer;
+    }
+    button:hover:not(:disabled) { border-color: var(--dim); }
+    button:disabled { opacity: 0.4; cursor: default; }
+    button[aria-pressed="true"].mute { background: #7f1d1d; border-color: #b91c1c; }
+    button[aria-pressed="true"].solo { background: #78350f; border-color: var(--accent); }
+    #strips { display: grid; gap: 12px; }
+    .strip {
+      display: grid; grid-template-columns: 140px minmax(220px, 300px) 1fr; gap: 16px; align-items: center;
+      background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--color); border-radius: 8px; padding: 12px;
+    }
+    .name { display: grid; gap: 8px; }
+    .name strong { color: var(--color); }
+    .buttons { display: flex; gap: 6px; }
+    .name select { width: 100%; }
+    .controls { display: grid; grid-template-columns: 32px 1fr 52px; gap: 4px 8px; align-items: center; }
+    .controls label { color: var(--dim); }
+    .controls output { color: var(--dim); text-align: right; font-variant-numeric: tabular-nums; }
+    input[type="range"] { width: 100%; accent-color: var(--color, var(--accent)); }
+    canvas { width: 100%; height: 96px; background: #0b0d0f; border-radius: 4px; display: block; }
+    select {
+      background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 6px;
+      padding: 4px 6px; font: inherit;
+    }
+    .knob { display: flex; align-items: center; gap: 8px; color: var(--dim); }
+    .knob input { width: 120px; }
+    .knob output { min-width: 2.5ch; color: var(--text); }
+    .master { margin-left: auto; }
+    #status { flex-basis: 100%; min-height: 1.4em; }
+    @media (max-width: 640px) {
+      .strip { grid-template-columns: 1fr; }
+      .name { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+      .master { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Dub Generator</h1>
+      <button id="play">Play</button>
+      <button id="stop" disabled>Stop</button>
+      <label class="knob">BPM <input id="bpm" type="range" min="60" max="90" step="1" value="72"><output id="bpm-out">72</output></label>
+      <label class="knob">Key <select id="key"></select> minor</label>
+      <label class="knob master">Master <input id="master" type="range" min="-40" max="6" step="0.5" value="0"></label>
+      <span id="status">Press Play — the song arranges itself as it goes.</span>
+    </header>
+    <section id="strips"></section>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
