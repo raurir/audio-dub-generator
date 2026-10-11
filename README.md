@@ -7,4 +7,4 @@ yarn
 yarn dev
 ```
 
-Built AI using with Web Audio & [audio](https://github.com/audiojs/audio)
+Built with AI using Web Audio & [audio](https://github.com/audiojs/audio)
