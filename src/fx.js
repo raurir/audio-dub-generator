@@ -5,8 +5,9 @@ import audio from 'audio'
 import { spring } from '@audio/reverb-spring/audio'
 import { plate } from '@audio/reverb-dattorro/audio'
 
-// Bundlers can't follow the registry's dynamic import(spec), so register the FX up front
-audio.use(spring, plate)
+// Bundlers can't follow the registry's dynamic import(spec), so register the FX up front.
+// Explicit ids: the library names ops after the function, which minification renames.
+audio.use(Object.assign(spring, { id: 'spring' }), Object.assign(plate, { id: 'plate' }))
 
 // Ping-pong echo: input → L delay → R delay → (filters, saturation, feedback) → L delay …
 // Each repeat alternates sides; the feedback loop is darkened and soft-clipped like tape,

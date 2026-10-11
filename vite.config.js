@@ -16,8 +16,10 @@ const optionalAudioPkgs = {
   },
 }
 
-export default defineConfig({
+export default defineConfig(({ command, isPreview }) => ({
+  // Production is served from S3 under this prefix (preview mirrors it); dev stays at the root
+  base: command === 'build' || isPreview ? '/apps/audio-dub-generator/' : '/',
   plugins: [optionalAudioPkgs],
   build: { target: 'esnext', chunkSizeWarningLimit: 4000 },
   optimizeDeps: { exclude: ['audio'] },
-})
+}))
